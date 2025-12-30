@@ -1,0 +1,85 @@
+# =====================
+# Java / Spring Boot
+# =====================
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+logs/
+*.log.*
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Maven / Gradle
+target/
+build/
+out/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# =====================
+# Node / Angular
+# =====================
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Angular build
+dist/
+dist-*/
+out-tsc/
+.angular/
+.angular/cache/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# =====================
+# OS generated files
+# =====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =====================
+# Optional: JetBrains
+# =====================
+*.idea/
+.idea/**
+
+# =====================
+# Others
+# =====================
+*.iml
