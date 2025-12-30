@@ -1,11 +1,8 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+// ==============================
+// THEME
+// ==============================
 html {
   height: 100%;
   @include mat.theme((
@@ -19,19 +16,139 @@ html {
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
   height: 100%;
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font-family: 'Inter', sans-serif;
+  font: var(--mat-sys-body-medium);
+}
+
+// ==============================
+// GLOBAL TYPOGRAPHY
+// ==============================
+h1 {
+  margin-bottom: 36px;
+}
+
+// ==============================
+// CONTENT WRAPPER
+// ==============================
+.content {
+  padding: 50px !important;
+}
+
+// ==============================
+// DATA TABLE STYLES
+// ==============================
+.data-table {
+  width: 100%;
+  table-layout: fixed;
+
+  .mat-mdc-header-row,
+  .mat-mdc-row {
+    height: 70px;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.data-table-actions {
+  width: 16%;
+  max-width: 160px;
+  padding-right: 12px;
+  text-align: center;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    .mat-mdc-icon-button {
+      --mdc-icon-button-state-layer-size: 36px;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+
+      mat-icon {
+        font-size: 20px;
+        line-height: 36px;
+      }
+    }
+  }
+
+  th.mat-mdc-header-cell.data-table-actions .mat-mdc-header-cell-label {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.data-table-card {
+  margin-bottom: 24px;
+}
+
+.data-table-header {
+  padding-bottom: 0;
+}
+
+.data-table-filter {
+  width: 100%;
+  max-width: 320px;
+}
+
+.mat-mdc-card-content {
+  padding: 0 !important;
+
+  thead {
+    background-color: #fafafa !important;
+  }
+}
+
+.mat-mdc-card-header {
+  padding: 20px !important;
+}
+
+// ==============================
+// GLOBAL MATERIAL INPUT STYLE
+// ==============================
+.mat-form-field-appearance-outline {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0 6px;
+
+  .mat-input-element {
+    padding: 10px;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .mat-form-field-label {
+    color: #666;
+    font-weight: 500;
+  }
+
+  .mat-form-field-outline {
+    color: #ccc;
+  }
+
+  &.mat-focused .mat-form-field-outline-thick {
+    border-color: #1e88e5;
+  }
+
+  &.mat-error .mat-form-field-outline-thick {
+    border-color: #e53935;
+  }
+
+  &.mat-form-field-disabled {
+    background-color: #f5f5f5;
+    color: #999;
+  }
+
+  .mat-form-field-suffix .mat-icon-button {
+    background: none;
+  }
 }
