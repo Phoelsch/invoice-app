@@ -8,17 +8,17 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        loadComponent: () => import('./components/dashboard.component').then(m => m.DashboardComponent),
+        loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
         data: { title: 'Dashboard', icon: 'dashboard' }
     },
     {
         path: 'customers',
-        loadComponent: () => import('./components/customers.component').then(m => m.CustomersComponent),
+        loadComponent: () => import('./components/customers/customers.component').then(m => m.CustomersComponent),
         data: { title: 'Kunden', icon: 'people' }
     },
     {
         path: 'invoices',
-        loadComponent: () => import('./components/invoices.component').then(m => m.InvoicesComponent),
+        loadComponent: () => import('./components/invoices/invoices.component').then(m => m.InvoicesComponent),
         data: { title: 'Rechnungen', icon: 'receipt_long' }
     }
 ];
