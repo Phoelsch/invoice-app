@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    BreadcrumbsComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
