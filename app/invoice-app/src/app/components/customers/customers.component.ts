@@ -8,6 +8,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
+import { CustomerDialogComponent } from '../customer-dialog/customer-dialog.component';
 
 import { Customer } from '../../api-client';
 
@@ -21,6 +24,8 @@ import { Customer } from '../../api-client';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    CustomerDialogComponent,
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
@@ -31,6 +36,7 @@ import { Customer } from '../../api-client';
   ]
 })
 export class CustomersComponent implements AfterViewInit {
+  constructor(private dialog: MatDialog) {}
   displayedColumns: string[] = ['name', 'actions'];
   dataSource = new MatTableDataSource<Customer>(customers);
 
@@ -52,6 +58,30 @@ export class CustomersComponent implements AfterViewInit {
   clearFilter(input?: HTMLInputElement) {
     if (input) input.value = '';
     this.dataSource.filter = '';
+  }
+
+  openCustomerDialog(mode: 'create' | 'view' | 'edit' = 'create', customer?: any) {
+    const ref = this.dialog.open(CustomerDialogComponent, {
+      data: { mode, customer },
+      width: '520px'
+    });
+
+    ref.afterClosed().subscribe(result => {
+      if (result && mode === 'create') {
+        // assign a new id and add to list
+        const maxId = this.customers.reduce((m, c) => Math.max(m, c.id || 0), 0);
+        const newCustomer = { ...result, id: maxId + 1 } as Customer;
+        this.customers.push(newCustomer);
+        this.dataSource.data = this.customers;
+      } else if (result && mode === 'edit') {
+        // replace existing customer by id
+        const idx = this.customers.findIndex(c => c.id === result.id);
+        if (idx > -1) {
+          this.customers[idx] = { ...this.customers[idx], ...result } as Customer;
+          this.dataSource.data = this.customers;
+        }
+      }
+    });
   }
 
   // expose raw customers as well
