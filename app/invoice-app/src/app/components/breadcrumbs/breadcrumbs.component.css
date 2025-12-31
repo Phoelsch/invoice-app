@@ -1,0 +1,5 @@
+.breadcrumbs ol { list-style: none; padding: 0; margin: 0; display:flex; gap:8px; align-items:center; }
+.breadcrumbs li { color: rgba(0,0,0,0.7); font-size:14px; }
+.breadcrumbs a { color: var(--mat-sys-primary, #1976d2); text-decoration: none; }
+.breadcrumbs li::after { content: '/'; margin: 0 8px; color: #999; }
+.breadcrumbs li:last-child::after { content: ''; }
