@@ -1,23 +1,55 @@
 /* Customers component styles */
-.data-table-header { display:flex; gap:16px; }
-.data-table-filter { flex:1; }
-.filter-row { display:flex; align-items:center; gap:12px; width:100%; }
-.actions-right { margin-left:auto; }
+.data-table-header {
+    display: flex;
+    gap: 16px;
+}
 
-.data-table { width:100%; }
+.data-table-filter {
+    flex: 1;
+}
 
-/* center the actions column header and cells */
-th.mat-header-cell.data-table-actions,
-td.mat-cell.data-table-actions {
-	text-align: center;
-	vertical-align: middle;
+.filter-row {
+    display: flex;
+    /* align-items: center; */
+    gap: 12px;
+    width: 100%;
+}
+
+.actions-right {
+    margin-left: auto;
+}
+
+.data-table {
+    width: 100%;
+}
+
+th.mat-mdc-header-cell.data-table-actions {
+    text-align: center;
 }
 
 /* center the action buttons and keep icons vertically centered on hover */
-.data-table-actions__buttons { display:flex; gap:6px; justify-content:center; align-items:center; width: max-content; margin: 0 auto; }
-.data-table-actions__buttons button { display:flex; align-items:center; justify-content:center; height:40px; width:40px; }
-.data-table-actions__buttons button mat-icon { line-height: 1; }
+.data-table-actions__buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.data-table-actions__buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+}
+
+.data-table-actions__buttons button mat-icon {
+    line-height: 1;
+}
 
 /* maintain vertical centering when hovering */
-.data-table-actions__buttons button:hover { transform: none; }
-
+.data-table-actions__buttons button:hover {
+    transform: none;
+}
