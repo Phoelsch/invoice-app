@@ -1,2 +1,70 @@
-<h2>Rechnungen</h2>
-<p>Liste der Rechnungen (Platzhalter).</p>
+<h1>Rechnungen</h1>
+
+<mat-card class="data-table-card">
+    <mat-card-header class="data-table-header">
+        <div class="filter-row">
+            <mat-form-field class="data-table-filter custom-input" appearance="outline">
+                <mat-label>Suche</mat-label>
+                <input #filterInput matInput (input)="applyFilter($event)" placeholder="Rechnungsnummer, Kunde, Datum" />
+                <button mat-icon-button matSuffix *ngIf="filterValue" (click)="clearFilter(filterInput)"
+                    aria-label="clear">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="actions-right">
+                <button mat-flat-button color="primary" (click)="createInvoice()">
+                    <mat-icon>receipt_long</mat-icon>
+                    Neue Rechnung
+                </button>
+            </div>
+        </div>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="data-table-wrapper">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z1 data-table" id="invoices-table">
+                <!-- Invoice Number -->
+                <ng-container matColumnDef="invoiceNumber">
+                    <th mat-header-cell *matHeaderCellDef> Rechnungsnummer </th>
+                    <td mat-cell *matCellDef="let invoice"> {{ invoice.invoiceNumber }} </td>
+                </ng-container>
+
+                <!-- Customer Name -->
+                <ng-container matColumnDef="customer">
+                    <th mat-header-cell *matHeaderCellDef> Kunde </th>
+                    <td mat-cell *matCellDef="let invoice"> {{ invoice.customer?.name }} </td>
+                </ng-container>
+
+                <!-- Invoice Date -->
+                <ng-container matColumnDef="invoiceDate">
+                    <th mat-header-cell *matHeaderCellDef> Rechnungsdatum </th>
+                    <td mat-cell *matCellDef="let invoice"> {{ invoice.invoiceDate | date:'dd.MM.yyyy' }} </td>
+                </ng-container>
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="data-table-actions"> Aktionen </th>
+                    <td mat-cell *matCellDef="let invoice" class="data-table-actions">
+                        <div class="data-table-actions__buttons">
+                            <button mat-icon-button color="primary" (click)="viewInvoice(invoice)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" (click)="editInvoice(invoice)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" (click)="deleteInvoice(invoice)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="data-table-footer">
+        <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+    </mat-card-actions>
+</mat-card>

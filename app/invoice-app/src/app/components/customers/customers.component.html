@@ -3,7 +3,7 @@
 <mat-card class="data-table-card">
 	<mat-card-header class="data-table-header">
 		<div class="filter-row">
-			<mat-form-field class="data-table-filter custom-input">
+			<mat-form-field class="data-table-filter custom-input" appearance="outline">
 				<mat-label>Suche</mat-label>
 				<input #filterInput matInput (input)="applyFilter($event)" placeholder="Name" />
 				<button mat-icon-button matSuffix *ngIf="dataSource.filter" (click)="clearFilter(filterInput)"
@@ -11,7 +11,6 @@
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-
 			<div class="actions-right">
 				<button mat-flat-button color="primary" (click)="openCustomerDialog('create')">
 					<mat-icon>person_add</mat-icon>

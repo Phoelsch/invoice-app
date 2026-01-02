@@ -91,13 +91,62 @@ h1 {
   margin-bottom: 24px;
 }
 
+
+/* Customers component styles */
 .data-table-header {
-  padding-bottom: 0;
+  display: flex;
+  gap: 16px;
 }
 
 .data-table-filter {
-  width: 100%;
+  flex: 1;
   max-width: 320px;
+}
+
+.filter-row {
+  display: flex;
+  /* align-items: center; */
+  gap: 12px;
+  width: 100%;
+}
+
+.actions-right {
+  margin-left: auto;
+}
+
+.data-table {
+  width: 100%;
+}
+
+th.mat-mdc-header-cell.data-table-actions {
+  text-align: center;
+}
+
+/* center the action buttons and keep icons vertically centered on hover */
+.data-table-actions__buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.data-table-actions__buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+}
+
+.data-table-actions__buttons button mat-icon {
+  line-height: 1;
+}
+
+/* maintain vertical centering when hovering */
+.data-table-actions__buttons button:hover {
+  transform: none;
 }
 
 .mat-mdc-card-content {
@@ -111,6 +160,7 @@ h1 {
 .mat-mdc-card-header {
   padding: 20px !important;
 }
+
 
 // ==============================
 // GLOBAL MATERIAL INPUT STYLE
