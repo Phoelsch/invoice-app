@@ -1,34 +1,38 @@
 package de.hoelscherp.invoice.api.persistence.records;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 
-@Builder(toBuilder = true)
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "customers")
-public record CustomerRecord(
+@Builder(toBuilder = true)
+public class CustomerRecord {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id,
+        Long id;
 
         @Column(nullable = false)
-        String name,
+        String name;
 
         @Column(nullable = false)
-        String email,
+        String email;
 
         @Column(name = "contact_person")
-        String contactPerson,
+        String contactPerson;
 
-        String location,
+        String location;
 
         @Column(name = "postal_code")
-        String postalCode,
+        String postalCode;
 
-        String street,
+        String street;
 
         @Column(name = "main_number")
-        String mainNumber
+        String mainNumber;
 
-) {}
+}

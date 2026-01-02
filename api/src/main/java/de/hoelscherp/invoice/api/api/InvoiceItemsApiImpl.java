@@ -15,26 +15,26 @@ public class InvoiceItemsApiImpl implements InvoiceItemsApi {
     private final InvoiceItemService service;
 
     @Override
-    public ResponseEntity<InvoiceItem> createInvoiceItem(Integer invoiceId, InvoiceItem invoiceItem) {
-        InvoiceItem created = service.create(invoiceId.longValue(), invoiceItem);
+    public ResponseEntity<InvoiceItem> createInvoiceItem(Long invoiceId, InvoiceItem invoiceItem) {
+        InvoiceItem created = service.create(invoiceId, invoiceItem);
         return ResponseEntity.ok(created);
     }
 
     @Override
-    public ResponseEntity<InvoiceItem> updateInvoiceItem(Integer id, InvoiceItem invoiceItem) {
-        InvoiceItem updated = service.update(id.longValue(), invoiceItem);
+    public ResponseEntity<InvoiceItem> updateInvoiceItem(Long id, InvoiceItem invoiceItem) {
+        InvoiceItem updated = service.update(id, invoiceItem);
         return ResponseEntity.ok(updated);
     }
 
     @Override
-    public ResponseEntity<Void> deleteInvoiceItem(Integer id) {
-        service.delete(id.longValue());
+    public ResponseEntity<Void> deleteInvoiceItem(Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<List<InvoiceItem>> getItemsByInvoice(Integer invoiceId) {
-        List<InvoiceItem> items = service.getByInvoice(invoiceId.longValue());
+    public ResponseEntity<List<InvoiceItem>> getItemsByInvoice(Long invoiceId) {
+        List<InvoiceItem> items = service.getByInvoice(invoiceId);
         return ResponseEntity.ok(items);
     }
 }

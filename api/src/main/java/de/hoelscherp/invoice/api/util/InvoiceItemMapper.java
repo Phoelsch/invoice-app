@@ -10,7 +10,7 @@ public class InvoiceItemMapper {
 
     public static InvoiceItemRecord toInvoiceItemRecord(InvoiceItem item, InvoiceRecord invoiceRecord) {
         return new InvoiceItemRecord(
-                item.getId() != null ? item.getId().longValue() : null,
+                item.getId() != null ? item.getId() : null,
                 invoiceRecord,
                 item.getOrderId(),
                 item.getDescription(),
@@ -25,7 +25,7 @@ public class InvoiceItemMapper {
     public static InvoiceItem toInvoiceItem(InvoiceItemRecord record) {
 
         return new InvoiceItem()
-                .id(record.id() != null ? record.id().intValue() : null)
+                .id(record.id() != null ? record.id() : null)
                 .orderId(record.orderId())
                 .description(record.description())
                 .type(record.type())

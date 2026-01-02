@@ -41,7 +41,7 @@ public class CustomerService {
 
         CustomerRecord updatedRecord = CustomerMapper.toCustomerRecord(customer)
                 .toBuilder()
-                .id(existing.id())
+                .id(existing.getId())
                 .build();
 
         CustomerRecord saved = repository.save(updatedRecord);

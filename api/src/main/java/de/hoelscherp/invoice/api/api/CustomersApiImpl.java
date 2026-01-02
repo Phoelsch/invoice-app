@@ -4,11 +4,13 @@ import de.hoelscherp.invoice.api.models.Customer;
 import de.hoelscherp.invoice.api.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Component
+@RequestMapping
+@RestController
 @RequiredArgsConstructor
 public class CustomersApiImpl implements CustomersApi {
 
@@ -21,8 +23,8 @@ public class CustomersApiImpl implements CustomersApi {
     }
 
     @Override
-    public ResponseEntity<Void> deleteCustomer(Integer id) {
-        service.delete(Long.valueOf(id));
+    public ResponseEntity<Void> deleteCustomer(Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -33,14 +35,14 @@ public class CustomersApiImpl implements CustomersApi {
     }
 
     @Override
-    public ResponseEntity<Customer> getCustomer(Integer id) {
-        Customer customer = service.get(Long.valueOf(id));
+    public ResponseEntity<Customer> getCustomer(Long id) {
+        Customer customer = service.get(id);
         return ResponseEntity.ok(customer);
     }
 
     @Override
-    public ResponseEntity<Customer> updateCustomer(Integer id, Customer customer) {
-        Customer updated = service.update(Long.valueOf(id), customer);
+    public ResponseEntity<Customer> updateCustomer(Long id, Customer customer) {
+        Customer updated = service.update(id, customer);
         return ResponseEntity.ok(updated);
     }
 }

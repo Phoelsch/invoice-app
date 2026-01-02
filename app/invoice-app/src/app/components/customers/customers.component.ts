@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
@@ -9,8 +9,11 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/mat
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CustomerDialogComponent } from '../customer-dialog/customer-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { DefaultService } from '../../api-client/api/default.service';
 
 import { Customer } from '../../api-client';
 
@@ -24,8 +27,10 @@ import { Customer } from '../../api-client';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
     MatDialogModule,
     CustomerDialogComponent,
+    ConfirmDialogComponent,
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
@@ -36,11 +41,15 @@ import { Customer } from '../../api-client';
   ]
 })
 export class CustomersComponent implements AfterViewInit {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private api: DefaultService, private snackBar: MatSnackBar) {}
   displayedColumns: string[] = ['name', 'actions'];
-  dataSource = new MatTableDataSource<Customer>(customers);
+  dataSource = new MatTableDataSource<Customer>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+
+  ngOnInit(): void {
+    this.loadCustomers();
+  }
 
   ngAfterViewInit(): void {
     if (this.paginator) {
@@ -68,125 +77,65 @@ export class CustomersComponent implements AfterViewInit {
 
     ref.afterClosed().subscribe(result => {
       if (result && mode === 'create') {
-        // assign a new id and add to list
-        const maxId = this.customers.reduce((m, c) => Math.max(m, c.id || 0), 0);
-        const newCustomer = { ...result, id: maxId + 1 } as Customer;
-        this.customers.push(newCustomer);
-        this.dataSource.data = this.customers;
+        this.api.createCustomer(result).subscribe({
+          next: created => {
+            const data = this.dataSource.data.slice();
+            data.unshift(created);
+            this.dataSource.data = data;
+            this.snackBar.open('Kunde erstellt', 'Schließen', { duration: 3000 });
+          },
+          error: () => this.snackBar.open('Fehler beim Erstellen', 'Schließen', { duration: 4000 })
+        });
       } else if (result && mode === 'edit') {
-        // replace existing customer by id
-        const idx = this.customers.findIndex(c => c.id === result.id);
-        if (idx > -1) {
-          this.customers[idx] = { ...this.customers[idx], ...result } as Customer;
-          this.dataSource.data = this.customers;
-        }
+        if (!result.id) return;
+        this.api.updateCustomer(result.id, result).subscribe({
+          next: updated => {
+            const idx = this.dataSource.data.findIndex(c => c.id === updated.id);
+            if (idx > -1) {
+              const data = this.dataSource.data.slice();
+              data[idx] = updated;
+              this.dataSource.data = data;
+            }
+            this.snackBar.open('Kunde aktualisiert', 'Schließen', { duration: 3000 });
+          },
+          error: () => this.snackBar.open('Fehler beim Aktualisieren', 'Schließen', { duration: 4000 })
+        });
       }
     });
   }
 
-  // expose raw customers as well
-  customers = customers;
-}
+  deleteCustomer(id?: number) {
+    if (!id) return;
+    // use Material confirm dialog instead of browser confirm()
+    const ref = this.dialog.open(ConfirmDialogComponent, {
+      width: '420px',
+      data: {
+        title: 'Kunde löschen',
+        message: 'Möchten Sie den Kunden wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
+        confirmText: 'Löschen',
+        cancelText: 'Abbrechen'
+      }
+    });
 
-export const customers: Customer[] = [
-  {
-    id: 1,
-    name: 'Musterfirma GmbH',
-    email: 'info@musterfirma.de',
-    contactPerson: 'Max Mustermann',
-    street: 'Musterstraße 1',
-    postalCode: '12345',
-    location: 'Musterstadt',
-    mainNumber: '+49 30 1234567'
-  },
-  {
-    id: 2,
-    name: 'Beispielfirma AG',
-    email: 'kontakt@beispielfirma.de',
-    contactPerson: 'Anna Beispiel',
-    street: 'Beispielweg 2',
-    postalCode: '54321',
-    location: 'Beispielstadt',
-    mainNumber: '+49 40 7654321'
-  },
-  {
-    id: 3,
-    name: 'Schneider & Söhne KG',
-    email: 'office@schneider-soehne.de',
-    contactPerson: 'Thomas Schneider',
-    street: 'Industriestraße 15',
-    postalCode: '70173',
-    location: 'Stuttgart',
-    mainNumber: '+49 711 998877'
-  },
-  {
-    id: 4,
-    name: 'IT Solutions Müller',
-    email: 'support@mueller-it.de',
-    contactPerson: 'Laura Müller',
-    street: 'Techpark 3',
-    postalCode: '80331',
-    location: 'München',
-    mainNumber: '+49 89 112233'
-  },
-  {
-    id: 5,
-    name: 'Kreativwerkstatt Weber',
-    email: 'kontakt@weber-kreativ.de',
-    contactPerson: 'Daniel Weber',
-    street: 'Ateliergasse 7',
-    postalCode: '50667',
-    location: 'Köln',
-    mainNumber: '+49 221 445566'
-  },
-  {
-    id: 6,
-    name: 'Bauunternehmen Fischer GmbH',
-    email: 'info@fischer-bau.de',
-    contactPerson: 'Peter Fischer',
-    street: 'Baustraße 22',
-    postalCode: '90402',
-    location: 'Nürnberg',
-    mainNumber: '+49 911 778899'
-  },
-  {
-    id: 7,
-    name: 'Handelshaus König',
-    email: 'service@koenig-handel.de',
-    contactPerson: 'Sabine König',
-    street: 'Marktplatz 5',
-    postalCode: '28195',
-    location: 'Bremen',
-    mainNumber: '+49 421 334455'
-  },
-  {
-    id: 8,
-    name: 'Logistikzentrum Braun',
-    email: 'logistik@braun-transporte.de',
-    contactPerson: 'Michael Braun',
-    street: 'Hafenstraße 18',
-    postalCode: '20457',
-    location: 'Hamburg',
-    mainNumber: '+49 40 998877'
-  },
-  {
-    id: 9,
-    name: 'Medienagentur Hoffmann',
-    email: 'hello@hoffmann-media.de',
-    contactPerson: 'Julia Hoffmann',
-    street: 'Medienallee 9',
-    postalCode: '10115',
-    location: 'Berlin',
-    mainNumber: '+49 30 556677'
-  },
-  {
-    id: 10,
-    name: 'Consulting Partner Richter',
-    email: 'beratung@richter-consulting.de',
-    contactPerson: 'Stefan Richter',
-    street: 'Businesspark 12',
-    postalCode: '60311',
-    location: 'Frankfurt am Main',
-    mainNumber: '+49 69 223344'
+    ref.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+      this.api.deleteCustomer(id).subscribe({
+        next: () => {
+          this.dataSource.data = this.dataSource.data.filter(c => c.id !== id);
+          this.snackBar.open('Kunde gelöscht', 'Schließen', { duration: 3000 });
+        },
+        error: () => this.snackBar.open('Fehler beim Löschen', 'Schließen', { duration: 4000 })
+      });
+    });
   }
-];
+
+  private loadCustomers() {
+    this.api.getAllCustomers().subscribe({
+      next: list => {
+        this.dataSource.data = list || [];
+      },
+      error: () => this.snackBar.open('Fehler beim Laden der Kunden', 'Schließen', { duration: 4000 })
+    });
+  }
+
+}

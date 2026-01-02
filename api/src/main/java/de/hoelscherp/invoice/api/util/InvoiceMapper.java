@@ -22,7 +22,7 @@ public class InvoiceMapper {
                 : List.of();
 
         return InvoiceRecord.builder()
-                .id(invoice.getId() != null ? invoice.getId().longValue() : null)
+                .id(invoice.getId() != null ? invoice.getId() : null)
                 .customerRecord(customerRecord)
                 .description(invoice.getDescription())
                 .invoiceNumber(invoice.getInvoiceNumber())
@@ -45,7 +45,7 @@ public class InvoiceMapper {
                 : List.of();
 
         return Invoice.builder()
-                .id(record.id() != null ? record.id().intValue() : null)
+                .id(record.id() != null ? record.id() : null)
                 .customer(customer)
                 .description(record.description())
                 .invoiceNumber(record.invoiceNumber())

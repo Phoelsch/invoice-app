@@ -100,6 +100,13 @@
                                 <generateBuilders>true</generateBuilders>
                             </configOptions>
                             <output>${project.build.directory}/generated-sources/openapi</output>
+                            <typeMappings>
+                                <typeMapping>number=Long</typeMapping>
+                            </typeMappings>
+
+                            <importMappings>
+                                <importMapping>Long=java.lang.Long</importMapping>
+                            </importMappings>
                         </configuration>
                     </execution>
                 </executions>

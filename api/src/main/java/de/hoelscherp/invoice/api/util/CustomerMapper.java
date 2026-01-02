@@ -7,6 +7,7 @@ public class CustomerMapper {
 
     public static CustomerRecord toCustomerRecord(Customer customer) {
         return CustomerRecord.builder()
+                .id(customer.getId())
                 .name(customer.getName())
                 .email(customer.getEmail())
                 .location(customer.getLocation())
@@ -17,15 +18,16 @@ public class CustomerMapper {
                 .build();
     }
 
-    public static Customer toCustomer(CustomerRecord customerRecord) {
+    public static Customer toCustomer(CustomerRecord record) {
         return Customer.builder()
-                .name(customerRecord.name())
-                .email(customerRecord.email())
-                .location(customerRecord.location())
-                .street(customerRecord.street())
-                .postalCode(customerRecord.postalCode())
-                .mainNumber(customerRecord.mainNumber())
-                .contactPerson(customerRecord.contactPerson())
+                .id(record.getId() != null ? record.getId() : null)
+                .name(record.getName())
+                .email(record.getEmail())
+                .location(record.getLocation())
+                .street(record.getStreet())
+                .postalCode(record.getPostalCode())
+                .mainNumber(record.getMainNumber())
+                .contactPerson(record.getContactPerson())
                 .build();
     }
 }

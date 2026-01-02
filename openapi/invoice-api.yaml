@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   description: API for simple invoice management
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8443/api
 paths:
   # ------------------ Customer ------------------
   /customers:
@@ -45,7 +45,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '200':
           description: Customer found
@@ -61,7 +61,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       requestBody:
         required: true
         content:
@@ -83,7 +83,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '204':
           description: Customer deleted
@@ -98,7 +98,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '200':
           description: List of invoices
@@ -116,7 +116,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       requestBody:
         required: true
         content:
@@ -139,7 +139,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '200':
           description: Invoice found
@@ -155,7 +155,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       requestBody:
         required: true
         content:
@@ -177,7 +177,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '204':
           description: Invoice deleted
@@ -192,7 +192,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '200':
           description: List of invoice items
@@ -210,7 +210,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       requestBody:
         required: true
         content:
@@ -233,7 +233,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       requestBody:
         required: true
         content:
@@ -255,7 +255,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: number
       responses:
         '204':
           description: Invoice item deleted
@@ -266,7 +266,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: number
         name:
           type: string
         email:
@@ -289,7 +289,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: number
         customer:
           $ref: '#/components/schemas/Customer'
         description:
@@ -324,7 +324,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: number
         invoice:
           $ref: '#/components/schemas/Invoice'
         orderId:

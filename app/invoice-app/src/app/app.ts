@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { BASE_PATH } from './api-client/variables';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     RouterLink,
     BreadcrumbsComponent
   ],
+  
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
