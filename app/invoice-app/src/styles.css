@@ -1,0 +1,5 @@
+/* Import a prebuilt Angular Material theme so `color="primary"` works */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* You can add global styles to this file, and also import other style files */
+body{ font-family: Roboto, "Helvetica Neue", Arial, sans-serif; background:#f5f7fb }

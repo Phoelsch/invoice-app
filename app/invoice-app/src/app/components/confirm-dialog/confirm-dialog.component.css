@@ -1,0 +1,4 @@
+.mat-dialog-content p { margin: 0 0 0.5rem 0; }
+
+/* ensure actions have spacing */
+mat-dialog-actions { margin-top: 8px; }

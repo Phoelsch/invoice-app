@@ -1,0 +1,349 @@
+openapi: 3.0.1
+info:
+  title: Invoice API
+  version: "1.0.0"
+  description: API for simple invoice management
+servers:
+  - url: http://localhost:8443/api
+paths:
+  # ------------------ Customer ------------------
+  /customers:
+    get:
+      summary: Get all customers
+      operationId: getAllCustomers
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      summary: Create a new customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Created customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    get:
+      summary: Get a customer by ID
+      operationId: getCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      summary: Update a customer
+      operationId: updateCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    delete:
+      summary: Delete a customer
+      operationId: deleteCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Customer deleted
+
+  # ------------------ Invoice ------------------
+  /invoices/customer/{customerId}:
+    get:
+      summary: Get invoices by customer
+      operationId: getInvoicesByCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: List of invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+    post:
+      summary: Create invoice for customer
+      operationId: createInvoice
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+      responses:
+        '200':
+          description: Created invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+  /invoices/{id}:
+    get:
+      summary: Get invoice by ID
+      operationId: getInvoice
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Invoice found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+    put:
+      summary: Update an invoice
+      operationId: updateInvoice
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+      responses:
+        '200':
+          description: Updated invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+    delete:
+      summary: Delete an invoice
+      operationId: deleteInvoice
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Invoice deleted
+
+  # ------------------ Invoice Item ------------------
+  /invoice-items/invoice/{invoiceId}:
+    get:
+      summary: Get invoice items by invoice
+      operationId: getItemsByInvoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: List of invoice items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItem'
+    post:
+      summary: Create invoice item for invoice
+      operationId: createInvoiceItem
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem'
+      responses:
+        '200':
+          description: Created invoice item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem'
+  /invoice-items/{id}:
+    put:
+      summary: Update invoice item
+      operationId: updateInvoiceItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem'
+      responses:
+        '200':
+          description: Updated invoice item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem'
+    delete:
+      summary: Delete invoice item
+      operationId: deleteInvoiceItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Invoice item deleted
+
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        email:
+          type: string
+        contactPerson:
+          type: string
+        location:
+          type: string
+        postalCode:
+          type: string
+        street:
+          type: string
+        mainNumber:
+          type: string
+      required:
+        - name
+        - email
+
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: number
+        customer:
+          $ref: '#/components/schemas/Customer'
+        description:
+          type: string
+        invoiceNumber:
+          type: string
+        invoiceDate:
+          type: string
+          format: date
+        serviceDate:
+          type: string
+          format: date
+        paymentDate:
+          type: string
+          format: date
+        createDate:
+          type: string
+          format: date-time
+        finalizedDate:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+      required:
+        - invoiceNumber
+        - createDate
+        - customer
+
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: number
+        invoice:
+          $ref: '#/components/schemas/Invoice'
+        orderId:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        timeSpent:
+          type: integer
+        price:
+          type: number
+          format: double
+        serviceDateStart:
+          type: string
+          format: date
+        serviceDateEnd:
+          type: string
+          format: date
+      required:
+        - type
+        - price

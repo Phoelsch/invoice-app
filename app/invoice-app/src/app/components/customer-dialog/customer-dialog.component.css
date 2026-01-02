@@ -1,0 +1,41 @@
+.customer-form { display:flex; flex-direction:column; gap:12px; min-width:320px; }
+.customer-form .full { width:100%; }
+
+/* allow a slightly wider dialog for more fields on larger screens */
+@media (min-width: 600px) {
+	.customer-form { min-width: 440px; }
+}
+
+/* ensure the dialog title doesn't overlap the content */
+/* styled header to clearly separate from form */
+
+/* ensure dialog container has no extra top padding so header touches the container */
+:host ::ng-deep .mat-mdc-dialog-container,
+:host ::ng-deep .mat-dialog-container {
+	padding: 0;
+}
+
+h2[mat-dialog-title].dialog-header {
+	margin: 0;
+	display:flex;
+	align-items:center;
+	gap:8px;
+	position:relative;
+	z-index:2;
+	/* equal vertical spacing inside header */
+	padding: 14px 20px;
+	background: var(--dialog-header-bg, #fafafa);
+	border-bottom: 1px solid rgba(0,0,0,0.08);
+	/* inherit container's top corner radius so header aligns flush */
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+}
+
+/* make content spacing match header bottom padding */
+div[mat-dialog-content] { padding: 14px 20px 12px; }
+
+/* ensure the form starts below the header */
+.customer-form { padding-top: 0; }
+.customer-form mat-form-field:first-child { margin-top: 0; }
+
+mat-dialog-actions { margin-top: 12px; }

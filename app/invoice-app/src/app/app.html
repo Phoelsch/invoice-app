@@ -1,0 +1,50 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+  >
+
+    <mat-toolbar class="sidenav-header" color="primary">
+      <div class="logo">
+        <span class="app-title">Invoice App</span>
+      </div>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <a
+        class="nav-item"
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        (click)="onNavItemClick(drawer)"
+      >
+        <mat-icon class="nav-icon" *ngIf="item.icon">
+          {{ item.icon }}
+        </mat-icon>
+        <span class="nav-text">{{ item.title }}</span>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar color="primary" class="toolbar">
+      <button
+        mat-icon-button
+        *ngIf="(isHandset$ | async)"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="content">
+      <app-breadcrumbs></app-breadcrumbs>
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

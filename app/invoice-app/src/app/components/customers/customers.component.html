@@ -1,0 +1,70 @@
+<h1>Kunden</h1>
+
+<mat-card class="data-table-card">
+	<mat-card-header class="data-table-header">
+		<div class="filter-row">
+			<mat-form-field class="data-table-filter custom-input">
+				<mat-label>Suche</mat-label>
+				<input #filterInput matInput (input)="applyFilter($event)" placeholder="Name" />
+				<button mat-icon-button matSuffix *ngIf="dataSource.filter" (click)="clearFilter(filterInput)"
+					aria-label="clear">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+
+			<div class="actions-right">
+				<button mat-flat-button color="primary" (click)="openCustomerDialog('create')">
+					<mat-icon>person_add</mat-icon>
+					Neuer Kunde
+				</button>
+			</div>
+		</div>
+	</mat-card-header>
+
+	<mat-card-content>
+		<div class="data-table-wrapper">
+			<table mat-table [dataSource]="dataSource" class="mat-elevation-z1 data-table" id="customers-table">
+
+				<!-- Name -->
+				<ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef> Name </th>
+					<td mat-cell *matCellDef="let element">
+						{{ element.name }}
+					</td>
+				</ng-container>
+
+				<!-- Actions -->
+				<ng-container matColumnDef="actions">
+					<th mat-header-cell *matHeaderCellDef class="data-table-actions">
+						Aktionen
+					</th>
+					<td mat-cell *matCellDef="let element" class="data-table-actions">
+						<div class="data-table-actions__buttons">
+							<button mat-icon-button color="primary" (click)="openCustomerDialog('view', element)">
+								<mat-icon>visibility</mat-icon>
+							</button>
+							<button mat-icon-button color="primary" (click)="openCustomerDialog('edit', element)">
+								<mat-icon>edit</mat-icon>
+							</button>
+							<button mat-icon-button color="primary" (click)="deleteCustomer(element.id)">
+								<mat-icon>delete</mat-icon>
+							</button>
+						</div>
+					</td>
+				</ng-container>
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+			</table>
+		</div>
+	</mat-card-content>
+
+	<mat-card-actions class="data-table-footer">
+		<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+	</mat-card-actions>
+</mat-card>
+
+<!-- keep dialog component referenced so Angular compiler recognizes it for dynamic opening -->
+<app-customer-dialog *ngIf="false" aria-hidden="true"></app-customer-dialog>
+<app-confirm-dialog *ngIf="false" aria-hidden="true"></app-confirm-dialog>

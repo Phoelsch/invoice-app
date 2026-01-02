@@ -1,0 +1,57 @@
+<h2 mat-dialog-title class="dialog-header">
+  <mat-icon *ngIf="mode === 'create'">person_add</mat-icon>
+  {{ mode === 'create' ? 'Neuer Kunde' : mode === 'edit' ? 'Kunde bearbeiten' : 'Kunde anzeigen' }}
+</h2>
+
+<br>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="customer-form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>E‑Mail</mat-label>
+      <input matInput formControlName="email" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Telefon / Hauptnummer</mat-label>
+      <input matInput formControlName="mainNumber" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Ansprechpartner</mat-label>
+      <input matInput formControlName="contactPerson" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Straße</mat-label>
+      <input matInput formControlName="street" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>PLZ</mat-label>
+      <input matInput formControlName="postalCode" [readonly]="readonlyMode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Ort</mat-label>
+      <input matInput formControlName="location" [readonly]="readonlyMode" />
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <ng-container *ngIf="mode === 'view'; else editActions">
+    <button mat-flat-button color="primary" (click)="cancel()">Schließen</button>
+  </ng-container>
+  <ng-template #editActions>
+    <button mat-stroked-button (click)="cancel()">Abbrechen</button>
+    <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">
+      {{ mode === 'create' ? 'Erstellen' : 'Speichern' }}
+    </button>
+  </ng-template>
+</div>
